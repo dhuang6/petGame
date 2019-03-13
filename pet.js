@@ -5,6 +5,28 @@ code is how rare
 0 = not rare
 3 is very rare
 
+function luck(){
+  var lucky;
+  lucky = Math.floor(Math.random() *2);
+  if(lucky ===1){
+    var total = genPetTier() +1;
+    return total;
+  }
+  return;
+}
+
+
+
+ parrot: {
+      name: 'parrot',
+      personality: 'friendly',
+      energy: 'high',
+      greet : function(){
+        alert('SQUAKK');
+      },
+      hunger: 3,//should eat soon.
+    },
+
 roll a random number at beginning to get new pet.
 */
 var pet = {
@@ -71,6 +93,16 @@ var pet = {
       energy: 'high',
       greet : function(){
         alert('SQUAKK');
+      },
+      hunger: 3,//should eat soon.
+    },
+    duck: {
+      code: 2,
+      name: 'duck',
+      personality: 'friendly',
+      energy: 'medium',
+      greet : function(){
+        alert('QUACKK');
       },
       hunger: 3,//should eat soon.
     },
@@ -148,39 +180,35 @@ return num = Math.floor(Math.random() *4) + 1;
 }
 
 function petEquation(num){
-  var petPick,tier0, tier1, tier2, tier3;
-  tier0 = ['lizard','slug','rabbit'];
+  var petPick,tier1, tier2, tier3, tier4;
+  tier1 = ['lizard','slug','rabbit'];
   
   tier1 = ['cat','dog'];
   
   tier2 = ['cow'];
   tier3 = ['monkey','trex','unicorn'];
  var genPet = genNum();
-  if(genPet === 0){
-    petPick = genNum();
-    for(let i = 0; i < tier0.length; i++){
-      petPick === tier0[i];
-      console.log(tier0[i]);
-    }
-  }
   if(genPet === 1){
     petPick = genNum();
     for(let i = 0; i < tier1.length; i++){
-    petPick = tier1[i];
-      console.log(petPick);
+      petPick === tier1[i];
+      console.log(tier1[i]);
     }
   }
   if(genPet === 2){
     petPick = genNum();
-    for(let i = 0; i < tier2.length; i++){
-      petPick = tier2[i];
       console.log(petPick);
-  }
+    }
   }
   if(genPet === 3){
     petPick = genNum();
-    for(let i = 0; i < tier3.length; i++){
-      petPick = tier3[i];
+   
+      console.log(petPick);
+  }
+  }
+  if(genPet === 4){
+    petPick = genNum();
+   
       console.log(petPick);
     }
   }

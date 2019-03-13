@@ -1,11 +1,13 @@
+//global variables
+var hungerlvl, petCodes;
+
+
 //setup default webpage
 function init(){
   var start;
   
-  
+ //implement luck.
 }
-
-
 
 var pets = {
       
@@ -47,7 +49,7 @@ var pets = {
       greet : function(){
         alert('meow');
       },
-      hunger: 4, //start out a bit hungry
+      hunger: 5, //start out a bit hungry
     },
     
     
@@ -58,7 +60,7 @@ var pets = {
       greet : function(){
         alert('bark');
       },
-      hunger: 3,//should eat soon.
+      hunger: 4,//should eat soon.
     },
    
     duck: {
@@ -68,7 +70,7 @@ var pets = {
       greet : function(){
         alert('QUACKK');
       },
-      hunger: 3,//should eat soon.
+      hunger: 4,//should eat soon.
     },
     cow: {
       name: 'cow',
@@ -77,7 +79,7 @@ var pets = {
       greet : function(){
         alert('moo');
       },
-      hunger: 3,//should eat soon.
+      hunger: 4,//should eat soon.
     },
     
     seal : {
@@ -87,7 +89,7 @@ var pets = {
       greet: function(){
         alert('claps fins');
       },
-      hunger: 2, //hungry
+      hunger: 3, //hungry
       
     },
    owl : {
@@ -97,7 +99,7 @@ var pets = {
       greet: function(){
         alert('hoot, hoot');
       },
-      hunger: 2, //hungry
+      hunger: 3, //hungry
       
     },
     
@@ -112,7 +114,7 @@ var pets = {
       hunger: 3,
     },
     tRex: {
-      name: 'T-Rex',
+      name: 'tRex',
       personality: 'angry',
       energy: 'high',
       greet: function(){
@@ -154,11 +156,27 @@ petCodes = {// 4 levels with 3 pets at each level.
   code3: ['cow', 'seal','owl' ],
   code4: ['monkey','tRex','unicorn'],
 }
+
+function isPetHungry(){
+  //hungerlvl 0 is not hungry //  1 is hungry // 2 is very hungry..
+  
+  if(hungerlvl === 6){
+    return 0;
+  } else if(hungerlvl > 4 && hungerlvl < 2){
+    return 1;
+  } else {//I want to make it so that the pet is thinking of leaving at this point.
+    return 2;
+  }
+}
   
 function getPet(){//eventually want to add in logic that only allows you to select 3x.
   var pet,petInfo,num,secondNum,chosenNum, count, petImage;
-  
+  //show the gen info for new pet.
   petInfo = document.getElementById('displayArea');
+  
+  //show image of pet.
+  petImage = document.getElementById('defaultPetImage');
+  
   num = genPetTier();
   chosenNum = num;
     console.log(chosenNum);
@@ -171,6 +189,8 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       petInfo.textContent = pets[pet].name;
       pets[pet].greet();
       displayPet(pet);
+      //displays the pet picture based on petCodes.
+      petImage.src='default' + pets[pet].name +'.jpeg';
       
       return pet;
       
@@ -182,7 +202,7 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       petInfo.textContent = pets[pet].name;
       pets[pet].greet();
       displayPet(pet);
-      
+      petImage.src='default' + pets[pet].name+'.jpeg';
   
       return pet;
   }
@@ -192,7 +212,8 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       petInfo.textContent = pets[pet].name;
       pets[pet].greet();
       displayPet(pet);
-      
+      petImage.src='default' + pets[pet].name+'.jpeg';
+    
       return pet;
   }
   else if(chosenNum === 4){
@@ -201,22 +222,25 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       petInfo.textContent = pets[pet].name;
       pets[pet].greet();
       displayPet(pet);
+      petImage.src='default' + pets[pet].name+'.jpeg';
       return pet;
     }
 }
 
 //after end user has chosen pet
 function displayPet(pet){
+  //need to add in images for each pet next.
   var chosenPet,description;
   description = document.getElementById('displayArea');
   //this.pet = chosenPet;
   //chosenPet = pets[pet];
+  console.log(isPetHungry(pet));
   
-  if(pets[pet].hunger > 5){
+  if(isPetHungry(pet) > 5){
      description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently not hungry`;
     //console.log(`your pet ${pets[pet].name} is not hungry `);
    
-  } else if(pets[pet].hunger < 5 || pets[pet].hunger > 2 ){
+  } else if(isPetHungry(pet) < 5 || isPetHungry(pet) > 2 ){
     description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently hungry`;
     //console.log(`your pet ${pets[pet].name} is hungry `);
     
@@ -231,3 +255,8 @@ function displayPet(pet){
 }
 
 //play games with pet.
+//coin flip games
+//higher or lower.
+
+
+//figure out how to earn food either through games.
