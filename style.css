@@ -9,3 +9,12 @@ display:block;
   width: 550px;
   padding-left: 500px;
 }
+
+#feed.active  {
+  visibility: hidden;
+  
+}
+
+#playGames.active{
+  visibility: hidden;
+}

@@ -10,10 +10,21 @@
          <img src="petsDefault.jpg" alt="petsDefault.jpg" id="defaultPetImage" style="width:650px; height:525px;">
         </div>
         <div id="displayArea">
+          <p>
+            
+            Hi!
+            <br />
+            Please click the button below to get a pet.
+            Also, please be aware that you can only roll 3x before you are stuck with your friend!
+  
+          </p>
         </div>
         
      
-      <button id="start" onclick="getPet(this.value)">Click for pet</button>
+      <button id="start" class="petSelect" onclick="getPet()">Click for pet</button>
+      <button id="confirmPet" onclick="petConfirmed()">Confirm your pet</button>
+      <button id="feed" class="active">feed pet</button>
+      <button id="playGames" class="active">Play Games</button>
     </div>
     
     <script src="script.js"></script>

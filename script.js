@@ -1,17 +1,44 @@
 //global variables
-var hungerlvl, petCodes;
-
+var hungerlvl, petCodes,count, petSelected;
+//allow end user to select a new pet 3x.
 
 //setup default webpage
 function init(){
   var start;
-  
+  start = true;
+  if(start){
+count = 0;
+petSelected = false;
+  }
  //implement luck.
 }
 
-var pets = {
-      
+init();
+
+
+
+function selectPetCount(){
+  var btnClicked;
+  //count isn't increasing past 1 which means each new pet selection is separated.
+  count = 0;
+  btnClicked = document.querySelector('#petSelect');
+  console.log(btnClicked);
+  if(genPetCode){
+    count ++;
+  console.log(count);
+    if(count > 3){
+      console.log(count);
+    return alert('sorry you have selected a pet 3x and cannot choose again!');
+  }
     
+     
+  }
+  
+ 
+}
+
+var pets = {
+      //common//
     lizard: {
       name: 'lizard',
       personality: 'friendly',
@@ -52,7 +79,6 @@ var pets = {
       hunger: 5, //start out a bit hungry
     },
     
-    
     dog: {
       name: 'dog',
       personality: 'friendly',
@@ -62,7 +88,7 @@ var pets = {
       },
       hunger: 4,//should eat soon.
     },
-   
+   //less common//
     duck: {
       name: 'duck',
       personality: 'friendly',
@@ -102,7 +128,7 @@ var pets = {
       hunger: 3, //hungry
       
     },
-    
+    //rare//
     monkey: {
 
       name: 'monkey',
@@ -137,7 +163,7 @@ var pets = {
 
 function genPetTier(){
   var tier;
-  //gen a random num btwn 1 and 4
+  //gen a random num btwn 1 and 4 to select a tier.
   //Math.floor(Math.random() *4) + 1;
   tier = Math.floor(Math.random() *4) + 1;
     return tier;
@@ -145,8 +171,10 @@ function genPetTier(){
 
 function genPetCode(){
   var code;
-  //gen a random num btwn 0 and 2
+  
+  //gen a random num btwn 0 and 2 b/c there are 3 animals
   code = Math.floor(Math.random() *3);
+  
     return code;
 }
 
@@ -170,17 +198,18 @@ function isPetHungry(){
 }
   
 function getPet(){//eventually want to add in logic that only allows you to select 3x.
-  var pet,petInfo,num,secondNum,chosenNum, count, petImage;
+  var pet,petInfo,num,secondNum,chosenNum, petImage;
   //show the gen info for new pet.
   petInfo = document.getElementById('displayArea');
   
   //show image of pet.
   petImage = document.getElementById('defaultPetImage');
   
-  num = genPetTier();
-  chosenNum = num;
-    console.log(chosenNum);
-  
+  chosenNum = genPetTier();
+  console.log(chosenNum);
+  if(count < 3 && petSelected === false){
+    
+    console.log(count);
   if(chosenNum === 1){
     secondNum = genPetCode();
     //selects a random pet from the specified tier.
@@ -192,7 +221,7 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       //displays the pet picture based on petCodes.
       petImage.src='default' + pets[pet].name +'.jpeg';
       
-      return pet;
+      
       
   }
   
@@ -204,7 +233,7 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       displayPet(pet);
       petImage.src='default' + pets[pet].name+'.jpeg';
   
-      return pet;
+      
   }
   else if(chosenNum === 3){
     secondNum = genPetCode();
@@ -214,7 +243,7 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       displayPet(pet);
       petImage.src='default' + pets[pet].name+'.jpeg';
     
-      return pet;
+      
   }
   else if(chosenNum === 4){
     secondNum = genPetCode();
@@ -223,9 +252,58 @@ function getPet(){//eventually want to add in logic that only allows you to sele
       pets[pet].greet();
       displayPet(pet);
       petImage.src='default' + pets[pet].name+'.jpeg';
-      return pet;
+      
+      }
+      count++;
+      console.log(count);
+      return pet, chosenNum;
+    }
+    
+    else if(petSelected === true){
+      alert('congrats on choosing your new pet!');
+    }
+    else {
+      alert('sorry you have rolled for a pet 3x!');
     }
 }
+
+function showBtns(){
+  //displays buttons related to pet after pet has been chosen.
+  var showFeedBtn, showPlayBtn;
+  
+  if(petSelected || count ===3){
+    showPlayBtn = document.getElementById('playGames').style.visibility ='visible';
+    showFeedBtn = document.getElementById('feed').style.visibility ='visible';
+   // return showFeedBtn, showPlayBtn;
+  }
+}
+
+function hideBtns(){
+  var hideChoosePetBtn, petChosen, petChosenVal;
+  //hide btns that aren't needed after pet has been chosen.
+  if(petSelected || count > 3 ){
+  if(genPetCode){
+    hideChoosePetBtn = document.getElementById('start').style.visibility = 'hidden';
+    return hideChoosePetBtn;
+    }
+  }
+}
+
+//button for making it so you can't change pets.
+function petConfirmed(){
+  var userConfirmed;
+  userConfirmed = document.getElementById('confirmPet').addEventListener('click', function(e){
+        userConfirmed = true;
+       petSelected = true;
+       console.log(userConfirmed);
+      alert('congrats on your new pet!');
+      //petSelected
+      return petSelected;
+
+  });
+ 
+}
+
 
 //after end user has chosen pet
 function displayPet(pet){
@@ -235,24 +313,30 @@ function displayPet(pet){
   //this.pet = chosenPet;
   //chosenPet = pets[pet];
   console.log(isPetHungry(pet));
+  showBtns();
   
   if(isPetHungry(pet) > 5){
      description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently not hungry`;
+     
     //console.log(`your pet ${pets[pet].name} is not hungry `);
    
   } else if(isPetHungry(pet) < 5 || isPetHungry(pet) > 2 ){
     description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently hungry`;
+  
     //console.log(`your pet ${pets[pet].name} is hungry `);
     
   } else {
     //console.log(`your pet ${pets[pet].name} is about to leave to live with their counsin.`);
    description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently about to leave to live with their counsin.`;
+  
   }
   
   //description.textContent =`Your pet is a ${pets[pet].name} it's temperment is ${pets[pet].personality} and is currently ${pets[pet].hunger}`;
 
   
 }
+
+
 
 //play games with pet.
 //coin flip games
