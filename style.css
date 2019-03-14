@@ -10,7 +10,7 @@ display:block;
   padding-left: 500px;
 }
 
-#feed.active  {
+#feedPet.active  {
   visibility: hidden;
   
 }
